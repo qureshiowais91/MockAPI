@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cats = require("./routes/cats");
-
+const colors=  require("colors");
 // const logger = require("./middleware/logger");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
@@ -10,10 +10,10 @@ dotenv.config({ path: "./config/.env" });
 
 connectDB()
   .then((conn) => {
-    console.log(`mongoDB Connected ${conn.connection.host}`);
+    console.log(`mongoDB Connected ${conn.connection.host}`.blue.bold);
   })
   .catch((err) => {
-    console.log(`Erorr ${err}`);
+    console.log(`Erorr ${err}`.red);
     process.exit(1);
   });
 
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV == "development") {
 app.use("/api/v1/cats", cats);
 
 const server = app.listen(PORT, () => {
-  console.log(`server ${PORT}`);
+  console.log(`Server is Up At ${PORT}`.yellow);
 });
 
 // handle rejection
