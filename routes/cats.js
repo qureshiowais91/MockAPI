@@ -4,8 +4,8 @@ const {
   getCats,
   getCat,
   addCat,
-  updateCat,
   deleteCat,
+  updateCat,
 } = require("../controllers/cats");
 
 const rounter = express.Router();

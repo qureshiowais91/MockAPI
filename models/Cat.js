@@ -8,7 +8,11 @@ const mongoose = require("mongoose");
 }*/
 
 const CatSchema = new mongoose.Schema({
-  slug: string,
+  slug: String,
+  photo: {
+    type: String,
+    default: "no-photo.jpg",
+  },
   name: {
     type: String,
     required: [true, "Please Enter Your Cat's Name!"],
@@ -16,7 +20,7 @@ const CatSchema = new mongoose.Schema({
     maxlength: [30, "Max Length Is 30 Characters"],
   },
   birthDate: {
-    type: date,
+    type: Date,
   },
   description: {
     type: String,
@@ -25,7 +29,7 @@ const CatSchema = new mongoose.Schema({
   },
   food: {
     type: String,
-    required: [true, "Tell Us About Your Cat!!!"],
+    required: [true, "Cat's Food!"],
     maxlength: [50, "Max Length Is 50 Characters"],
     description: {
       type: String,
@@ -34,9 +38,9 @@ const CatSchema = new mongoose.Schema({
     },
   },
 
-  type: {
+  breed: {
     // Array of strings
-    breed: [String],
+    type: [String],
     required: true,
     enum: [
       "Abyssinian",
@@ -51,7 +55,7 @@ const CatSchema = new mongoose.Schema({
 
   lifeExpectency: {
     type: Number,
-    min: [1, "Let it Live Atleast A Year!"],
+    min: [1, "Atleast A Year!"],
     max: [50, "Really"],
   },
   avgCost: Number,

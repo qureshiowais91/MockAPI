@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cats = require("./routes/cats");
-const colors=  require("colors");
+const colors = require("colors");
 // const logger = require("./middleware/logger");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
@@ -19,6 +19,8 @@ connectDB()
 
 const PORT = process.env.PORT;
 const app = express();
+
+app.use(express.json());
 
 if (process.env.NODE_ENV == "development") {
   // app.use(logger);

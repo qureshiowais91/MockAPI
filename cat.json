@@ -1,0 +1,37 @@
+{
+    "slug": "cat-1",
+    "photo": "meow-pic.jpg",
+    "name": "billow",
+    "birthDate": "10-1-2014",
+    "description": "my cuty cat is very cute!!",
+    "food": "fish",
+    "breed": "Abyssinian",
+    "lifeExpectency": 5,
+    "avgCost": 1250,
+    "owner": {
+        "name": "himal",
+        "phone": "1234567890",
+        "email": "himal@mail.com",
+        "address": "12 road vadodra"
+    }
+}
+{
+    "slug": "billow-po",
+    "photo": "meow-pic.jpg",
+    "name": "billow",
+    "birthDate": "10-1-2016",
+    "description": "my cuty cat is very cute!!",
+    "food": "milk",
+    "breed": "Chartreux",
+    "lifeExpectency":20,
+    "avgCost": 5012,
+    "owner": {
+        "name": "mamthan",
+        "phone": "1234567890",
+        "email": "manthan@mail.com",
+        "address": "12 road vadodra"
+    }
+}
+
+
+

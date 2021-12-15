@@ -1,6 +1,7 @@
 //  Public
 //  GET api/v1/cats
 //  get all cats
+const cats = require("../models/Cat");
 
 exports.getCats = (req, res, next) => {
   res.status(200).json({ success: true, data: "Show all cats" });
@@ -27,8 +28,18 @@ exports.getCat = (req, res, next) => {
     owner :owner2
 }*/
 
-exports.addCat = (req, res, next) => {
-  res.status(201).json({ success: true, data: "add new Cat" });
+exports.addCat = async (req, res, next) => {
+  try {
+    const cat = await cats.create(req.body);
+    res.status(201).json({
+      success: true,
+      data: cat,
+    });
+  } catch {
+    res.status(400).json({
+      success: false,
+    });
+  }
 };
 
 //  private
