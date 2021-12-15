@@ -36,9 +36,10 @@ exports.getCat = async (req, res, next) => {
       });
     }
   } catch (err) {
-    res.status(400).json({
-      success: fasle,
-    });
+    // res.status(400).json({
+    //   success: fasle,
+    // });
+    next(err);
   }
 };
 
