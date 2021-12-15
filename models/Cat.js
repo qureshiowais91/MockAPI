@@ -1,11 +1,4 @@
 const mongoose = require("mongoose");
-/* { 
-    id: int
-    name : tom,
-    food : foo,
-    age :  12,
-    owner :owner2
-}*/
 
 const CatSchema = new mongoose.Schema({
   slug: String,

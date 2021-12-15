@@ -3,30 +3,47 @@
 //  get all cats
 const cats = require("../models/Cat");
 
-exports.getCats = (req, res, next) => {
-  res.status(200).json({ success: true, data: "Show all cats" });
+exports.getCats = async (req, res, next) => {
+  try {
+    const allCats = await cats.find();
+
+    res.status(200).json({
+      success: true,
+      data: allCats,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: true,
+    });
+  }
 };
 
 //  Public
 //  GET id: api/v1/cats
 //  get a cat based on id
-exports.getCat = (req, res, next) => {
-  res
-    .status(201)
-    .json({ success: true, data: `Show cat at id ${req.params.id} ` });
+exports.getCat = async (req, res, next) => {
+  try {
+    const cat = await cats.findById(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      data: cat,
+    });
+    if (!cat) {
+      res.status(400).json({
+        success: fasle,
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      success: fasle,
+    });
+  }
 };
 
 //  Private
 //  POST id: api/v1/cats
 //  add new  cat to your profile
-
-/* { 
-    id: int
-    name : tom,
-    food : foo,
-    age :  12,
-    owner :owner2
-}*/
 
 exports.addCat = async (req, res, next) => {
   try {
@@ -46,10 +63,22 @@ exports.addCat = async (req, res, next) => {
 //  put id: api/v1/cats
 //  update cat's info based on ID only Owner(admin) can Update
 
-exports.updateCat = (req, res, next) => {
-  res
-    .status(201)
-    .json({ success: true, data: `change Name of ${req.params.id} Cat` });
+exports.updateCat = async (req, res, next) => {
+  const cat = await cats.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!cat) {
+    return res.status(400).json({
+      success: false,
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: cat,
+  });
 };
 
 //  private
