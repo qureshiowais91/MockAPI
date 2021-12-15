@@ -85,6 +85,17 @@ exports.updateCat = async (req, res, next) => {
 //  delete id : api/v1/cats
 //  delete cat based on ID only owner(admin) can delete
 
-exports.deleteCat = (req, res, next) => {
-  res.status(201).json({ success: true, data: `delete ${req.params.id} Cat` });
+exports.deleteCat = async (req, res, next) => {
+  const cat = await cats.findByIdAndDelete(req.params.id);
+
+  if (!cat) {
+    return res.status(400).json({
+      success: false,
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: cat,
+  });
 };
