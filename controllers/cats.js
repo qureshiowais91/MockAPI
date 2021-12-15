@@ -9,6 +9,7 @@ exports.getCats = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
+      count:allCats.length,
       data: allCats,
     });
   } catch (err) {
@@ -64,21 +65,27 @@ exports.addCat = async (req, res, next) => {
 //  update cat's info based on ID only Owner(admin) can Update
 
 exports.updateCat = async (req, res, next) => {
-  const cat = await cats.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  try {
+    const cat = await cats.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-  if (!cat) {
-    return res.status(400).json({
+    if (!cat) {
+      return res.status(400).json({
+        success: false,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: cat,
+    });
+  } catch {
+    res.status(400).json({
       success: false,
     });
   }
-
-  res.status(200).json({
-    success: true,
-    data: cat,
-  });
 };
 
 //  private
@@ -86,16 +93,22 @@ exports.updateCat = async (req, res, next) => {
 //  delete cat based on ID only owner(admin) can delete
 
 exports.deleteCat = async (req, res, next) => {
-  const cat = await cats.findByIdAndDelete(req.params.id);
+  try {
+    const cat = await cats.findByIdAndDelete(req.params.id);
 
-  if (!cat) {
-    return res.status(400).json({
+    if (!cat) {
+      return res.status(400).json({
+        success: false,
+      });
+    }
+    //  return Object That is Deleted
+    res.status(200).json({
+      success: true,
+      data: cat,
+    });
+  } catch {
+    res.status(400).json({
       success: false,
     });
   }
-
-  res.status(200).json({
-    success: true,
-    data: cat,
-  });
 };
