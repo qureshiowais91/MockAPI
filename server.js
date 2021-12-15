@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cats = require("./routes/cats");
 const colors = require("colors");
-// const logger = require("./middleware/logger");
+const errorHandler = require("./middleware/error");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 
@@ -27,9 +27,8 @@ if (process.env.NODE_ENV == "development") {
   app.use(morgan("dev"));
 }
 app.use("/api/v1/cats", cats);
+app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
   console.log(`Server is Up At ${PORT}`.yellow);
 });
-
-// handle rejection
