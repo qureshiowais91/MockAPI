@@ -2,6 +2,7 @@
 //  GET api/v1/cats
 //  get all cats
 const cats = require("../models/Cat");
+const ErrorRespons = require("../utils/errorRespons");
 
 exports.getCats = async (req, res, next) => {
   try {
@@ -9,7 +10,7 @@ exports.getCats = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      count:allCats.length,
+      count: allCats.length,
       data: allCats,
     });
   } catch (err) {
@@ -26,20 +27,21 @@ exports.getCat = async (req, res, next) => {
   try {
     const cat = await cats.findById(req.params.id);
 
+    if (!cat) {
+      return next(new ErrorRespons(`Cat not Found ${req.params.id}`, 404));
+    }
+
     res.status(200).json({
       success: true,
       data: cat,
     });
-    if (!cat) {
-      res.status(400).json({
-        success: fasle,
-      });
-    }
+    
   } catch (err) {
     // res.status(400).json({
     //   success: fasle,
     // });
-    next(err);
+
+    next(new ErrorRespons(`Incorrect ID ${req.params.id}`, 404));
   }
 };
 
