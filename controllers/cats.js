@@ -35,12 +35,10 @@ exports.getCat = async (req, res, next) => {
       success: true,
       data: cat,
     });
-    
   } catch (err) {
     // res.status(400).json({
     //   success: fasle,
     // });
-
     next(new ErrorRespons(`Incorrect ID ${req.params.id}`, 404));
   }
 };
