@@ -2,7 +2,7 @@
 //  GET api/v1/cats
 //  get all cats
 const cats = require("../models/Cat");
-const ErrorRespons = require("../utils/errorRespons");
+const ErrorResponse = require("../utils/errorResponse");
 
 exports.getCats = async (req, res, next) => {
   try {
@@ -14,9 +14,10 @@ exports.getCats = async (req, res, next) => {
       data: allCats,
     });
   } catch (err) {
-    res.status(400).json({
-      success: true,
-    });
+    // res.status(400).json({
+    //   success: true,
+    // });
+    next(err);
   }
 };
 
@@ -28,7 +29,7 @@ exports.getCat = async (req, res, next) => {
     const cat = await cats.findById(req.params.id);
 
     if (!cat) {
-      return next(new ErrorRespons(`Cat not Found ${req.params.id}`, 404));
+      return next(new ErrorResponse("Cat not Found", 404));
     }
 
     res.status(200).json({
@@ -39,7 +40,7 @@ exports.getCat = async (req, res, next) => {
     // res.status(400).json({
     //   success: fasle,
     // });
-    next(new ErrorRespons(`Incorrect ID ${req.params.id}`, 404));
+    next(err);
   }
 };
 
@@ -54,10 +55,11 @@ exports.addCat = async (req, res, next) => {
       success: true,
       data: cat,
     });
-  } catch {
-    res.status(400).json({
-      success: false,
-    });
+  } catch (err) {
+    // res.status(400).json({
+    //   success: false,
+    // });
+    next(err);
   }
 };
 
@@ -73,19 +75,18 @@ exports.updateCat = async (req, res, next) => {
     });
 
     if (!cat) {
-      return res.status(400).json({
-        success: false,
-      });
+      return next(new ErrorResponse("Cat not Found", 404));
     }
 
     res.status(200).json({
       success: true,
       data: cat,
     });
-  } catch {
-    res.status(400).json({
-      success: false,
-    });
+  } catch (err) {
+    // res.status(400).json({
+    //   success: false,
+    // });
+    next(err);
   }
 };
 
@@ -98,18 +99,16 @@ exports.deleteCat = async (req, res, next) => {
     const cat = await cats.findByIdAndDelete(req.params.id);
 
     if (!cat) {
-      return res.status(400).json({
-        success: false,
-      });
+      return next(new ErrorResponse("Cat not Found", 404));
     }
     //  return Object That is Deleted
     res.status(200).json({
       success: true,
       data: cat,
     });
-  } catch {
-    res.status(400).json({
-      success: false,
-    });
+  } catch (err) {
+    next(err); // res.status(400).json({
+    //   success: false,
+    // });
   }
 };
