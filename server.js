@@ -6,7 +6,7 @@ const errorHandler = require("./middleware/error");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 
-dotenv.config({ path: "./config/.env" });
+dotenv.config({ path: "./config/config.env" });
 
 connectDB()
   .then((conn) => {
@@ -32,4 +32,3 @@ app.use(errorHandler);
 const server = app.listen(PORT, () => {
   console.log(`Server is Up At ${PORT}`.yellow);
 });
-

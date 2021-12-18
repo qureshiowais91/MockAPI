@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
-const geoCoder = require("../utils/geoCodere");
+const geoCoder = require("../utils/geoCoder");
 
 const CatSchema = new mongoose.Schema({
   slug: String,
@@ -86,7 +86,6 @@ const CatSchema = new mongoose.Schema({
         index: "2dsphere",
       },
       formattedAddress: String,
-      street: String,
       city: String,
       zipcode: String,
       country: String,
@@ -103,18 +102,17 @@ CatSchema.pre("save", function (next) {
 });
 
 CatSchema.pre("save", async function (next) {
-  const loc = await geoCoder.geocode(this.address);
+  const loc = await geoCoder.geocode(this.owner.address);
 
-  this.location = {
+  this.owner.location = {
     type: "Point",
-    coordinates: [loc[0].longitude, loc[0].latitude],
     formattedAddress: loc[0].formattedAddress,
-    street: loc[0].streetName,
     city: loc[0].city,
     zipcode: loc[0].zipcode,
     country: loc[0].country,
+    coordinates: [loc[0].longitude, loc[0].latitude],
   };
-
+  this.owner.address = undefined;
   next();
 });
 
