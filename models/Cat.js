@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const slugify = require("slugify");
 const CatSchema = new mongoose.Schema({
   slug: String,
   photo: {
@@ -91,6 +91,14 @@ const CatSchema = new mongoose.Schema({
       country: String,
     },
   },
+});
+
+CatSchema.pre("save", function (next) {
+  console.log("slugify Run");
+  console.log(this.name);
+  this.slug = slugify(this.name, { lower: true });
+  console.log(this.slug);
+  next();
 });
 
 module.exports = mongoose.model("Cat", CatSchema);

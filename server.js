@@ -32,3 +32,4 @@ app.use(errorHandler);
 const server = app.listen(PORT, () => {
   console.log(`Server is Up At ${PORT}`.yellow);
 });
+
